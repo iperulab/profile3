@@ -1,2 +1,311 @@
-<font color="red">やまもり</font> 
-<font size="100">でかい</font>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>やまもり | Spring Profile</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      color: #4a3f3f;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.75), transparent 35%),
+        linear-gradient(180deg, #fff7fb 0%, #fff3e8 45%, #f5ffe9 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      top: -10vh;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, #fff, #ffd1dc 60%, #f8a8b9 100%);
+      border-radius: 70% 0 70% 0;
+      opacity: 0.7;
+      animation: fall linear infinite;
+      filter: blur(0.3px);
+    }
+
+    @keyframes fall {
+      0% { transform: translate3d(0, -10vh, 0) rotate(0deg); }
+      100% { transform: translate3d(120px, 110vh, 0) rotate(360deg); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    .hero {
+      margin-top: 18px;
+      padding: 42px 28px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 40px rgba(185, 129, 144, 0.18);
+      border: 1px solid rgba(255,255,255,0.6);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffd9e6, #fff0c9);
+      color: #8a5b6a;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.05;
+      color: #6f4f59;
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      line-height: 1.9;
+      margin: 18px 0 0;
+      color: #5f5555;
+    }
+
+    .highlight {
+      color: #cc6f8c;
+      font-weight: 700;
+    }
+
+    .profile-visual {
+      position: relative;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .circle {
+      width: min(320px, 78vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0.4) 35%, transparent 36%),
+        linear-gradient(135deg, #ffdce8, #fff2bd, #dff6d3);
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.8), 0 18px 40px rgba(175, 123, 138, 0.2);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .circle::before,
+    .circle::after {
+      content: "✿";
+      position: absolute;
+      font-size: 2.2rem;
+      color: rgba(215, 114, 151, 0.45);
+    }
+
+    .circle::before { top: 18px; left: 28px; }
+    .circle::after { right: 28px; bottom: 20px; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .circle-inner {
+      background: rgba(255,255,255,0.6);
+      border-radius: 22px;
+      padding: 20px 24px;
+      box-shadow: 0 10px 20px rgba(255,255,255,0.35);
+    }
+
+    .circle-inner .name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #6f4f59;
+      margin-bottom: 6px;
+    }
+
+    .circle-inner .sub {
+      font-size: 1rem;
+      color: #7f6d6d;
+      line-height: 1.8;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.76);
+      border: 1px solid rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 12px 26px rgba(153, 118, 126, 0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 30px rgba(153, 118, 126, 0.18);
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+      color: #b05c79;
+    }
+
+    .card p, .card li {
+      line-height: 1.85;
+      color: #5d5252;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .message {
+      margin-top: 24px;
+      padding: 28px;
+      background: linear-gradient(135deg, rgba(255,241,245,0.88), rgba(245,255,234,0.84));
+      border-radius: 28px;
+      box-shadow: 0 14px 30px rgba(152, 120, 128, 0.12);
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .message h2 {
+      margin-top: 0;
+      color: #9b5570;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 28px 0 8px;
+      color: #8f7d7d;
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-visual {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="petals" aria-hidden="true">
+    <span class="petal" style="left:5%; animation-duration:12s; animation-delay:-2s;"></span>
+    <span class="petal" style="left:14%; animation-duration:15s; animation-delay:-7s; width:14px; height:14px;"></span>
+    <span class="petal" style="left:22%; animation-duration:10s; animation-delay:-4s;"></span>
+    <span class="petal" style="left:31%; animation-duration:17s; animation-delay:-9s; width:16px; height:16px;"></span>
+    <span class="petal" style="left:43%; animation-duration:13s; animation-delay:-5s;"></span>
+    <span class="petal" style="left:54%; animation-duration:18s; animation-delay:-11s; width:20px; height:20px;"></span>
+    <span class="petal" style="left:66%; animation-duration:11s; animation-delay:-3s;"></span>
+    <span class="petal" style="left:75%; animation-duration:16s; animation-delay:-8s; width:15px; height:15px;"></span>
+    <span class="petal" style="left:86%; animation-duration:12s; animation-delay:-6s;"></span>
+    <span class="petal" style="left:94%; animation-duration:19s; animation-delay:-10s; width:13px; height:13px;"></span>
+  </div>
+
+  <div class="container">
+    <section class="hero">
+      <div>
+        <div class="badge">SPRING PROFILE</div>
+        <h1>やまもり<br>です。</h1>
+        <p class="lead">
+          春のやわらかな空気のように、<span class="highlight">あたたかく、穏やかで、少し前向きになれる</span>
+          そんな雰囲気をイメージした自己紹介ページです。<br>
+          はじめましての一言と、自分らしさが自然に伝わるようにまとめました。
+        </p>
+      </div>
+
+      <div class="profile-visual">
+        <div class="circle">
+          <div class="circle-inner">
+            <div class="name">YAMAMORI</div>
+            <div class="sub">
+              春 / 桜 / やさしい色合い<br>
+              自分らしさをシンプルに
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grid">
+      <article class="card">
+        <h2>About Me</h2>
+        <p>
+          こんにちは、やまもりです。新しいことに興味を持ちながら、
+          自分のペースで一歩ずつ前に進むことを大切にしています。
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>好きなこと</h2>
+        <ul>
+          <li>きれいな景色を見ること</li>
+          <li>ものづくりやアイデアを考えること</li>
+          <li>春の空気を感じながら散歩すること</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>My Style</h2>
+        <p>
+          落ち着いた雰囲気の中にも、少しだけ遊び心を。
+          そんなバランスを大事にしています。
+        </p>
+      </article>
+    </section>
+
+    <section class="message">
+      <h2>Message</h2>
+      <p>
+        このページは、やまもりという名前をやわらかく印象づけるための自己紹介ページです。
+        内容はシンプルですが、色や動きで春らしさを出しています。
+        実際に使うなら、ここに趣味、所属、好きなもの、SNSリンクなどを追加すれば、かなり見映えのするページになります。
+      </p>
+    </section>
+
+    <div class="footer">
+      © 2026 Yamamori Spring Profile
+    </div>
+  </div>
+</body>
+</html>
